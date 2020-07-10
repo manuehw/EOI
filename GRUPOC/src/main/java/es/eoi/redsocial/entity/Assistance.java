@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,11 +20,12 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name="assitance")
+@Table(name="assistance")
 public class Assistance {
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name="id")
 	private Integer id;
 
 	@Column
@@ -34,7 +37,19 @@ public class Assistance {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_event")
+	@JsonBackReference(value="event")
 	Event event;
+	
+	public Assistance() {
+		
+	}
+	
+	public Assistance(boolean state, User user, Event event) {
+		super();
+		this.state = state;
+		this.user = user;
+		this.event = event;
+	}
 	
 	
 	

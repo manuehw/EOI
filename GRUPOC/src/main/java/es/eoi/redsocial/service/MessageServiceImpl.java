@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.eoi.redsocial.entity.Message;
+import es.eoi.redsocial.entity.Relationship;
 import es.eoi.redsocial.repository.MessagesRepository;
 
 @Service
@@ -34,6 +35,11 @@ public class MessageServiceImpl implements MessageService{
 	public void deleteMessage(Integer id) {
 		messagesRepository.deleteById(id);
 		
+	}
+
+	@Override
+	public List<Relationship> findRelationshipByIdUser(Integer id_user) {
+		return messagesRepository.findRelationshipByIdUser(id_user);
 	}
 
 	

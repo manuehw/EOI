@@ -1,5 +1,7 @@
 package es.eoi.redsocial.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,11 +17,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table
-public class Relationship {
+@Table(name="relationship")
+public class Relationship implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column
 	private Integer id;
 	
 	@Column
@@ -32,4 +40,26 @@ public class Relationship {
 	@ManyToOne
 	@JoinColumn(name="user_2")
 	User user2;
+	
+	public Relationship() {
+		
+	}
+	
+
+	public Relationship(Integer id, String state, User user, User user2) {
+		super();
+		this.id = id;
+		this.state = state;
+		this.user = user;
+		this.user2 = user2;
+	}
+
+
+	public Relationship(User user, User user2) {
+		super();
+		this.user = user;
+		this.user2 = user2;
+	}
+	
+	
 }
