@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import es.eoi.redsocial.entity.Message;
-import es.eoi.redsocial.entity.Relationship;
 
 public interface MessageService {
 
@@ -15,6 +14,4 @@ public interface MessageService {
 	public Message createPost(Message message);
 	
 	public void deleteMessage(Integer id);
-	
-	public List<Relationship> findRelationshipByIdUser(Integer id_user);
 }

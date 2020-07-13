@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.eoi.redsocial.entity.Assistance;
 import es.eoi.redsocial.entity.Event;
 import es.eoi.redsocial.repository.EventRepository;
 
@@ -30,18 +29,6 @@ public class EventServiceImpl implements EventService{
 	public void save(Event event) {
 		eventRepository.save(event);
 		
-	}
-
-	@Override
-	public List<Event> findAssistanceByIdUser(Integer id_user) {
-		
-		return eventRepository.findAssistanceByIdUser(id_user);
-	}
-
-	@Override
-	public List<Event> findNotAssistanceByIdUser(Integer id_user) {
-		
-		return eventRepository.findNotAssistanceByIdUser(id_user);
 	}
 	
 }

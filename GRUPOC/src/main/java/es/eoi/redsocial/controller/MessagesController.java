@@ -1,6 +1,5 @@
 package es.eoi.redsocial.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.eoi.redsocial.dto.RelationshipDto;
 import es.eoi.redsocial.entity.Message;
 import es.eoi.redsocial.entity.Reaction;
-import es.eoi.redsocial.entity.Relationship;
-import es.eoi.redsocial.entity.User;
 import es.eoi.redsocial.service.MessageService;
 
 @RestController
@@ -55,42 +51,22 @@ public class MessagesController {
 	
 	@PostMapping("/{id}/reactions")
 	public void userReactions(@PathVariable Integer id,
-			@RequestBody String reaction, User user) {
+			@RequestBody String reaction, Integer id_user) {
 		Optional<Message> message= messageService.findById(id);
-		Message m= new Message();
-		m.setContent(message.get().getContent());
-		m.setId(message.get().getId());
-		m.setPublishDate(message.get().getPublishDate());
-		m.setReactions(message.get().getReactions());
-		m.setUser(message.get().getUser());
 		
-		Reaction react = new Reaction(user,m,reaction);
-		m.getReactions().add(react);
-	
-		messageService.createPost(m);
+		List<Reaction> message_reactions= message.get().getReactions();
+		Reaction react = null;
+		message_reactions.add(react);
+		
 	}
 	
 	@GetMapping("/user/{id}/friendPost")
-	public List<Message> friendPost(@PathVariable Integer id) {
-		List<Relationship> relationships= messageService.findRelationshipByIdUser(id);
-		List<Message> messages=new ArrayList<Message>();
-		System.out.println(relationships);
-		for (Relationship relationship : relationships) {
-			if((relationship.getUser().getId()==id && relationship.getUser2().getId()!=id)) {
-				messages=messageService.findMessageByUserId(relationship.getUser2().getId());
-				
-			}else if((relationship.getUser().getId()!=id && relationship.getUser2().getId()==id)) {
-				messages=messageService.findMessageByUserId(relationship.getUser().getId());
-			}
-		}
-		return messages;
+	public void friendPost(@PathVariable Integer id) {
+		
 	}
 	
 	@DeleteMapping("/{id}")
 	public void deleteMessage(@PathVariable Integer id) {
 		messageService.deleteMessage(id);
 	}
-	
-	
-	
 }

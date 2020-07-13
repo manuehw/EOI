@@ -1,8 +1,7 @@
 package es.eoi.redsocial.entity;
 
-
-
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,23 +12,21 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
-	
+
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private Integer id;
 	@Column
@@ -44,26 +41,41 @@ public class User {
 	private String user;
 	@Column
 	private String pass;
-	
-	@OneToMany(mappedBy ="user")
-	@JsonManagedReference(value="events")
+
+	@OneToMany(mappedBy = "user")
+
 	private List<Event> events;
-	
+
 	@OneToMany
-	@JsonManagedReference(value="messages")
+
 	private List<Message> messages;
-	
+
 	@OneToMany
-	@JsonManagedReference(value="reactions")
+
 	private List<Reaction> reactions;
-	
+
 	@OneToMany
-	@JsonManagedReference(value="assistances")
+
 	private List<Assistance> assistances;
-	
+
 	@OneToMany
-	@JsonManagedReference(value="relationships")
+
 	private List<Relationship> relationships;
-	
-	
+
+	public User(String name, String surname, String birthDate, String user, String pass) {
+		super();
+
+		this.name = name;
+		this.surname = surname;
+		this.birthDate = birthDate;
+		this.startDate = LocalDate.now();
+		this.user = user;
+		this.pass = pass;
+		this.events = new ArrayList<Event>();
+		this.messages = new ArrayList<Message>();
+		this.reactions = new ArrayList<Reaction>();
+		this.assistances = new ArrayList<Assistance>();
+		this.relationships = new ArrayList<Relationship>();
+	}
+
 }
